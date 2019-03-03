@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Assignment 7.2 - Guillaume</title>
+    </head>
+    <body>
+        <div id="main">
+            Something will go here
+        </div>
+     </body>
+
+     <script>
+
+     function UnemploymentRates(json){
+
+      var myDiv = document.getElementById("main");
+
+      let countries = json.structure.dimension.observations[0]
+      for(let i = 0; i < 43; i++){
+        let country = countries.values[i].name
+        let countrytable = document.createElement('li');
+
+        countrytable.innerHTML = country
+        myDiv.appendChild(country)
+
+        //Unemployment Rates
+        myDiv.innerHTML = "<div>" + json.dataSets.observations[i].[0] + "<div/>";
+        // myDiv.innerHTML = "<div>" + json.structure.dimension.observations[0].valuesname[i].name + "<div/>";
+
+      }
+
+       // console.log(json);
+     }
+
+     </script>
+
+     <script
+      src='https://stats.oecd.org/SDMX-JSON/data/LFS_SEXAGE_I_R/AUS+AUT+BEL+CAN+CHL+CZE+DNK+EST+FIN+FRA+DEU+GRC+HUN+ISL+IRL+ISR+ITA+JPN+KOR+LVA+LUX+MEX+NLD+NZL+NOR+POL+PRT+SVK+SVN+ESP+SWE+CHE+TUR+GBR+USA+OECD+COL+CRI+LTU+BRA+CHN+IND+IDN+RUS+ZAF.MW.1564.UR.A/all?startTime=2017&endTime=2017&dimensionAtObservation=allDimensions&jsoncallback=UnemploymentRates'>
+     </script>
+
+
+</html>
