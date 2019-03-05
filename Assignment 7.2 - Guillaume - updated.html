@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <title>Assignment 7.2 - Guillaume</title>
+    </head>
+    <body>
+        <div id="main"></div>
+        <div id="Rates"></div>
+     </body>
+
+     <script>
+
+//Using a different method like the weather example
+
+var OECDRequest = new XMLHttpRequest();   // Create a new object that will make our request, and get back the information we want.
+var myDiv = document.getElementById("main");
+var myDiv2 = document.getElementById("Rates")
+
+OECDRequest.open('GET', 'https://stats.oecd.org/SDMX-JSON/data/LFS_SEXAGE_I_R/AUS+AUT+BEL+CAN+CHL+CZE+DNK+EST+FIN+FRA+DEU+GRC+HUN+ISL+IRL+ISR+ITA+JPN+KOR+LVA+LUX+MEX+NLD+NZL+NOR+POL+PRT+SVK+SVN+ESP+SWE+CHE+TUR+GBR+USA+OECD+COL+CRI+LTU+BRA+CHN+IND+IDN+RUS+ZAF.MW.1564.UR.A/all?startTime=2017&endTime=2017&dimensionAtObservation=allDimensions'); // Give the Request the address of the API endpoint
+
+OECDRequest.send(null); // Send the request
+
+// When the request comes back, that will be seen by Javascript as a "state change." This function will run when that event happens.
+
+OECDRequest.onreadystatechange = function () {
+
+
+var DONE = 4; // readyState 4 means the request is done.
+
+var OK = 200; // status 200 is a successful return.
+
+if (OECDRequest.readyState === DONE) {
+
+if (OECDRequest.status === OK) {
+
+ // Now we have our response data, it currently lives at nwsRequest.responseText as a long string of data like we saw in our browser. Let's turn that into a Javascript object that we can work with.
+
+  var OECDResponse = JSON.parse(OECDRequest.responseText);
+
+  let countries = OECDResponse.structure.dimensions.observation[0].values
+   for(let i = 0; i < countries.length; i++){
+     let country = countries[i].name
+     let countrytable = document.createElement('li');
+
+     countrytable.innerHTML = country
+     myDiv.appendChild(countrytable)
+
+//Unemployment Rates
+  let UnemploymentRates = OECDResponse.dataSets[0].observations
+    for(let j = 0; j < UnemploymentRates.length; j++){
+      let eachrate = UnemploymentRates[j][0]
+      let URTable = document.createElement('li')
+
+      URTable.innerHTML = eachrate
+      myDiv2.appendChild(URTable)
+    }
+
+   }
+
+} else {
+
+console.log('Error'); // An error occurred during the request.
+
+}
+
+}
+
+};
+
+     </script>
+<!--
+     <script
+      src='https://stats.oecd.org/SDMX-JSON/data/LFS_SEXAGE_I_R/AUS+AUT+BEL+CAN+CHL+CZE+DNK+EST+FIN+FRA+DEU+GRC+HUN+ISL+IRL+ISR+ITA+JPN+KOR+LVA+LUX+MEX+NLD+NZL+NOR+POL+PRT+SVK+SVN+ESP+SWE+CHE+TUR+GBR+USA+OECD+COL+CRI+LTU+BRA+CHN+IND+IDN+RUS+ZAF.MW.1564.UR.A/all?startTime=2017&endTime=2017&dimensionAtObservation=allDimensions&jsonp&callback=UnemploymentRates'>
+     </script> -->
+
+
+</html>
