@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Exercise 7.1</title>
+    </head>
+    <body>
+        <div id="main">
+        </div>
+     </body>
+
+     <script>
+
+     function musixmatchResults(json){
+
+      var myDiv = document.getElementById("main");
+      var artistlist = json.message.body.artist_list
+
+      for(let i = 0; i < artistlist.length; i++){
+        results = artistlist[i].artist.artist_name;
+        let list = document.createElement('li');
+        list.innerHTML = results
+        myDiv.appendChild(list)
+
+      }
+
+     }
+
+     </script>
+
+     <script
+      src='https://api.musixmatch.com/ws/1.1/artist.search?q_artist=metallica&page_size=50&format=jsonp&callback=musixmatchResults&apikey=8c967fe6ccc6480913d963d526c1631b'>
+     </script>
+
+
+</html>
